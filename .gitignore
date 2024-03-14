@@ -1,0 +1,27 @@
+# Виртуальное окружение
+/venv/
+/env/
+
+# Файлы локальных настроек Django
+/shop_api/settings/local.py
+
+# Миграции базы данных Django
+/migrations/
+
+# Собранные статические файлы
+/staticfiles/
+
+# Файлы журналов, кэша и другие временные файлы
+/logs/
+/__pycache__/
+*.pyc
+.DS_Store
+
+# Файлы секретов и конфиденциальной информации
+/secrets.json
+
+# Файлы локальной истории редактора кода (например, для PyCharm)
+/.idea/
+
+# SQLite database file
+*.sqlite3
