@@ -5,6 +5,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/v1/products/', views.products_list_api_view),
+    path('api/v1/products/reviews', views.products_reviews_api_view),
     path('api/v1/products/<int:id>/', views.product_detail_api_view),
 
     path('api/v1/categories/', views.categories_list_api_view),

@@ -21,6 +21,8 @@ class Product(models.Model):
 class Review(models.Model):
     text = models.TextField(max_length=300)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    # stars = models.IntegerField(default=1, choices=[(i, i) for i in range(1, 1)])
+    stars = models.DecimalField(max_digits=3, decimal_places=1, default=1)
 
     def __str__(self):
         return self.text
