@@ -1,7 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from product.models import Product, Category, Review
-from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer
+from .serializers import (ProductSerializer, CategorySerializer, ReviewSerializer,
+                          ProductValidateSerializer, CategoryValidateSerializer, ReviewValidateSerializer)
 from rest_framework import status
 from django.db.models import Avg
 from django.http import HttpRequest
@@ -14,6 +15,9 @@ def products_list_api_view(request):
         data = ProductSerializer(products_list, many=True).data
         return Response(data=data)
     elif request.method == 'POST':
+        serializer = ProductValidateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'errors': serializer.errors})
         title = request.data.get('title')
         description = request.data.get('description')
         price = request.data.get('price')
@@ -73,6 +77,9 @@ def categories_list_api_view(request):
             data.append(category_data)
         return Response(data=data)
     elif request.method == 'POST':
+        serializer = CategoryValidateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'errors': serializer.errors})
         name = request.data.get('name')
         category = Category.objects.create(name=name)
         return Response(status=status.HTTP_201_CREATED, data={'category_id': category.id})
@@ -104,6 +111,9 @@ def reviews_list_api_view(request):
         data = ReviewSerializer(reviews_list, many=True).data
         return Response(data=data)
     elif request.method == 'POST':
+        serializer = ReviewValidateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'errors': serializer.errors})
         text = request.data.get('text')
         product_id = request.data.get('product_id')
         stars = request.data.get('stars')
@@ -131,4 +141,3 @@ def review_detail_api_view(request, id):
     else:
         review_detail.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
