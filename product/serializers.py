@@ -1,4 +1,4 @@
-from .models import Product, Category, Tag
+from .models import Product, Category
 from rest_framework import serializers
 from .models import Review
 
